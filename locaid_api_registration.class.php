@@ -24,6 +24,7 @@ class Locaid_API_Registration extends Locaid {
     const MSG_OPTIN_COMPLETE = 'OPTIN_COMPLETE';
     const MSG_OPTIN_PENDING = 'OPTIN_PENDING';
     const MSG_OK = 'OK';
+    const MSG_NONE = 'NONE';
 
     const ERROR_SUBSCRIPTION_PENDING = '00018';
 
