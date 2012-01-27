@@ -63,8 +63,9 @@ class Locaid {
      * Get the Registration API
      * @return Locaid_API_Registration
      */
-    public final function ReistrationApi() {
+    public final function RegistrationApi() {
         if (!$this->registration_api) {
+            require_once 'locaid_api_registration.class.php';
             $this->registration_api = new Locaid_API_Registration($this->locaid_username, $this->locaid_password, $this->locaid_classid, $this->mobile);
         }
 
@@ -77,6 +78,7 @@ class Locaid {
      */
     public final function GetXYApi() {
         if (!$this->getxy_api) {
+            require_once 'locaid_api_getxy.class.php';
             $this->getxy_api = new Locaid_API_GetXY($this->locaid_username, $this->locaid_password, $this->locaid_classid, $this->mobile);
         }
 

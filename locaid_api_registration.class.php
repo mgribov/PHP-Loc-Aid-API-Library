@@ -22,6 +22,9 @@ class Locaid_API_Registration extends Locaid {
     const COMMAND_ALL = 'ALL';
 
     const MSG_OPTIN_COMPLETE = 'OPTIN_COMPLETE';
+    const MSG_OK = 'OK';
+
+    const ERROR_SUBSCRIPTION_PENDING = '00018';
 
     
     /**
@@ -50,8 +53,16 @@ class Locaid_API_Registration extends Locaid {
         $this->__request('subscribePhone');
 
         $response = new stdClass();
-        $response->status = $this->response->classIdList->msisdnList->status;
-
+        $response->error = null;
+        
+        // we may be waiting for a subscription confirmation or some other error has occurred
+        if ($this->response->classIdList->msisdnList->error instanceof stdClass) {
+            $response->status = $this->response->classIdList->msisdnList->error->errorMessage;
+            $response->error = $this->response->classIdList->msisdnList->error->errorCode;
+        } else {
+            $response->status = $this->response->classIdList->msisdnList->status;
+        }
+        
         return $response;
     }
 
@@ -69,6 +80,7 @@ class Locaid_API_Registration extends Locaid {
         $this->__request('subscribePhone');
 
         $response = new stdClass();
+        $response->status = $this->response->classIdList->msisdnList->status;
         return $response;
     }
 
