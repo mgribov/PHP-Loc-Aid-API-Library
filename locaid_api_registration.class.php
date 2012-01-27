@@ -22,6 +22,7 @@ class Locaid_API_Registration extends Locaid {
     const COMMAND_ALL = 'ALL';
 
     const MSG_OPTIN_COMPLETE = 'OPTIN_COMPLETE';
+    const MSG_OPTIN_PENDING = 'OPTIN_PENDING';
     const MSG_OK = 'OK';
 
     const ERROR_SUBSCRIPTION_PENDING = '00018';
@@ -119,16 +120,28 @@ class Locaid_API_Registration extends Locaid {
     }
 
     /**
-     * See if this mobile is already opted in
+     * Get the phone status
      * @return bool
      */
-    public function getIsOptedIn() {
+    public function getStatus() {
         $this->request = new stdClass();
         $this->request->msisdnList = $this->mobile;
 
         $this->__request('getPhoneStatus');
 
-        if ($this->response->msisdnList->classIdList->status == self::MSG_OPTIN_COMPLETE) {
+        $response = new stdClass();
+        $response->status = $this->response->msisdnList->classIdList->status;
+        return $response;
+    }
+
+    /**
+     * See if this mobile is already opted in
+     * @return bool
+     */
+    public function getIsOptedIn() {
+        $status = $this->getStatus();
+
+        if ($status->status == self::MSG_OPTIN_COMPLETE) {
             return true;
         }
         return false;
