@@ -21,6 +21,8 @@ class Locaid_API_GetXY extends Locaid {
     const SYNC_SYN = 'SYN';
     const SYNC_ASYNC = 'ASYNC';
 
+    const MSG_NOTFOUND = 'NOT_FOUND';
+
     private $coor_type = self::COOR_DECIMAL;
     private $location_method = self::LOC_LEAST_EXPENSIVE;
     private $sync_type = self::SYNC_SYN;
@@ -113,19 +115,28 @@ class Locaid_API_GetXY extends Locaid {
 
         $response = new StdClass();
         $response->status = $this->response->locationResponse->status;
-        $response->technology = $this->response->locationResponse->technology;
-        $response->X = $this->response->locationResponse->coordinateGeo->x;
-        $response->Y = $this->response->locationResponse->coordinateGeo->y;
-        $response->geometry = $this->response->locationResponse->geometry;
         
-        // returned time is always in UTC
-        // example: 20120124201056 -> 2012/01/24 20:10:56 UTC
-        $time = $this->response->locationResponse->locationTime->time;
-        $t = DateTime::createFromFormat('YmdHis', $time, new DateTimeZone('UTC'));
+        if ($response->status = self::MSG_NOTFOUND) {
+            $response->message = 'not found';
+            $time = date('YmdHis');
+            $tz = date('e');
+        } else {
+            $response->technology = $this->response->locationResponse->technology;
+            $response->X = $this->response->locationResponse->coordinateGeo->x;
+            $response->Y = $this->response->locationResponse->coordinateGeo->y;
+            $response->geometry = $this->response->locationResponse->geometry;
+            
+            // returned time is always in UTC
+            // example: 20120124201056 -> 2012/01/24 20:10:56 UTC
+            $time = $this->response->locationResponse->locationTime->time;
+            $tz = 'UTC';
+        }
+
+        $t = DateTime::createFromFormat('YmdHis', $time, new DateTimeZone($tz));
         $t->setTimeZone(new DateTimeZone(date('e')));
         $response->datetime = $t->format('Y-m-d H:i:s');
         $response->timestamp = $t->getTimestamp();
-
+    
         return $response;
     }
 }

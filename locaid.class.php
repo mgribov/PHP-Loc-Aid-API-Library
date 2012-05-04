@@ -11,7 +11,7 @@ class Locaid {
     // @todo most calls support multiple mobiles - batching
     // @todo we can do async requests using transaction_id
 
-    const DEBUG = true;
+    const DEBUG = false;
 
     const WSDL_REGISTRATION = 'https://ws.loc-aid.net/webservice/RegistrationServices?wsdl';
     const WSDL_GETXY = 'https://ws.loc-aid.net/webservice/LatitudeLongitudeServices?wsdl';
