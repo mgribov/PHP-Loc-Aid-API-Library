@@ -116,7 +116,7 @@ class Locaid_API_GetXY extends Locaid {
         $response = new StdClass();
         $response->status = $this->response->locationResponse->status;
         
-        if ($response->status = self::MSG_NOTFOUND) {
+        if ($response->status == self::MSG_NOTFOUND) {
             $response->message = 'not found';
             $time = date('YmdHis');
             $tz = date('e');
