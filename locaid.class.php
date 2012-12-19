@@ -184,6 +184,7 @@ class Locaid {
 
         $this->request_last_api = get_class($this);
         $this->request_last_function = $function;
+        $this->request_last_errorCode = 0x00;
 
         $soap = new SoapClient($this->wsdl_current,$this->soap_options);
 
