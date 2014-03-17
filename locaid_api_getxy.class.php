@@ -54,7 +54,7 @@ class Locaid_API_GetXY extends Locaid {
      * @param string $type
      */
     public function setCoorType($type) {
-        if ($type != self::COOR_DECIMAL || $type != self::COOR_DMS) {
+        if ($type != self::COOR_DECIMAL && $type != self::COOR_DMS) {
             throw new Exception(__METHOD__ . ": Unknown coordinates type $type");
         }
         $this->coor_type = $type;
@@ -73,7 +73,7 @@ class Locaid_API_GetXY extends Locaid {
      * @param string $type
      */
     public function setLocationMethod($type) {
-        if ($type != self::LOC_LEAST_EXPENSIVE || $type != self::LOC_MOST_ACCURATE || $type != self::LOC_CELL || $type != self::LOC_A_GPS) {
+        if ($type != self::LOC_LEAST_EXPENSIVE && $type != self::LOC_MOST_ACCURATE && $type != self::LOC_CELL && $type != self::LOC_A_GPS) {
             throw new Exception(__METHOD__ . ": Unknown location method $type");
         }
         $this->coor_type = $type;
@@ -92,7 +92,7 @@ class Locaid_API_GetXY extends Locaid {
      * @param string $type
      */
     public function setSyncType($type) {
-        if ($type != self::SYNC_SYN || $type != self::SYNC_ASYNC) {
+        if ($type != self::SYNC_SYN && $type != self::SYNC_ASYNC) {
             throw new Exception(__METHOD__ . ": Unknown sync type $type");
         }
         $this->coor_type = $type;
