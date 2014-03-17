@@ -76,7 +76,7 @@ class Locaid_API_GetXY extends Locaid {
         if ($type != self::LOC_LEAST_EXPENSIVE && $type != self::LOC_MOST_ACCURATE && $type != self::LOC_CELL && $type != self::LOC_A_GPS) {
             throw new Exception(__METHOD__ . ": Unknown location method $type");
         }
-        $this->coor_type = $type;
+        $this->location_method = $type;
     }
 
     /**
@@ -95,7 +95,7 @@ class Locaid_API_GetXY extends Locaid {
         if ($type != self::SYNC_SYN && $type != self::SYNC_ASYNC) {
             throw new Exception(__METHOD__ . ": Unknown sync type $type");
         }
-        $this->coor_type = $type;
+        $this->sync_type = $type;
     }
 
     /**
